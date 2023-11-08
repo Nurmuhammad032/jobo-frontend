@@ -73,8 +73,39 @@
   body {
     @apply bg-background text-foreground;
   }
+}
 
-  .text-4xl {
+@layer components {
+  body.overlay-open {
+    @apply overflow-hidden;
+  }
+
+  .heading-4xl {
     @apply lg:text-[64px] sm:text-[52px] text-[44px] font-snag;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .show-xl {
+    @apply xl:block hidden;
+  }
+
+  .hidden-xl {
+    @apply xl:hidden block;
+  }
+
+  .normal-padding {
+    @apply py-3 px-4;
+  }
+
+  .navbar-drawer {
+    @apply fixed top-0 sm:w-[545px] sm:-right-[545px] w-screen -right-[100vw] invisible z-20 h-screen overflow-y-auto bg-white shadow-md transition-transform translate-x-0 duration-300 ease-in-out pb-32;
+  }
+
+  /* Drawer active */
+  .overlay-open .navbar-drawer {
+    @apply -translate-x-full visible;
   }
 }

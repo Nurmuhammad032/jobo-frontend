@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import { Inter } from "next/font/google";
 import React from "react";
 import { BaseNavbar } from "@/components/Navbar";
+
+const InterFont = Inter({ subsets: ["latin"] });
 
 const snagFont = localFont({
   src: "../fonts/snagajob-nib-bold.woff2",
@@ -20,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={snagFont.variable}>
+      <body className={`${snagFont.variable} ${InterFont.className}`}>
         <BaseNavbar />
         {children}
       </body>
