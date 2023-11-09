@@ -1,0 +1,43 @@
+.input {
+  @apply w-full block border border-gray-300 outline-none text-[#09101d] font-medium relative hover:border-blue focus:border-blue placeholder:text-base px-4 rounded-[3px] py-3;
+}
+
+.error,
+.errorInput {
+  animation: error 0.4s linear;
+}
+
+@keyframes error {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.pinInput {
+  font-size: 22px;
+  border-radius: 14px;
+  border: 2px solid #858c94;
+  margin: 2px 8px;
+  text-align: center;
+  @apply font-semibold outline-none sm:w-[63px] sm:h-[63px] h-12 w-12;
+}
+
+.pinInput {
+  @apply focus:!border-blue;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  place-items: flex-start;
+}
+
+.pinContainer {
+  display: flex;
+}

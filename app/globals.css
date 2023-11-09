@@ -84,6 +84,14 @@
     @apply lg:text-[64px] sm:text-[52px] text-[44px] font-snag;
   }
 
+  .heading-xl {
+    @apply font-snag text-dark text-[32px];
+  }
+
+  .max-400 {
+    @apply max-w-[400px] w-full;
+  }
+
   .flex-center {
     @apply flex justify-center items-center;
   }
