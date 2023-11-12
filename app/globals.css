@@ -68,7 +68,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-none;
   }
   body {
     @apply bg-background text-foreground;
@@ -81,39 +81,39 @@
   }
 
   .heading-4xl {
-    @apply lg:text-[64px] sm:text-[52px] text-[44px] font-snag;
+    @apply font-snag text-[44px] sm:text-[52px] lg:text-[64px];
   }
 
   .heading-xl {
-    @apply font-snag text-dark text-[32px];
+    @apply font-snag text-[32px] text-dark;
   }
 
   .max-400 {
-    @apply max-w-[400px] w-full;
+    @apply w-full max-w-[400px];
   }
 
   .flex-center {
-    @apply flex justify-center items-center;
+    @apply flex items-center justify-center;
   }
 
   .show-xl {
-    @apply xl:block hidden;
+    @apply hidden xl:block;
   }
 
   .hidden-xl {
-    @apply xl:hidden block;
+    @apply block xl:hidden;
   }
 
   .normal-padding {
-    @apply py-3 px-4;
+    @apply px-4 py-3;
   }
 
   .navbar-drawer {
-    @apply fixed top-0 sm:w-[545px] sm:-right-[545px] w-screen -right-[100vw] invisible z-20 h-screen overflow-y-auto bg-white shadow-md transition-transform translate-x-0 duration-300 ease-in-out pb-32;
+    @apply invisible fixed -right-[100vw] top-0 z-20 h-screen w-screen translate-x-0 overflow-y-auto bg-white pb-32 shadow-md transition-transform duration-300 ease-in-out sm:-right-[545px] sm:w-[545px];
   }
 
   /* Drawer active */
   .overlay-open .navbar-drawer {
-    @apply -translate-x-full visible;
+    @apply visible -translate-x-full;
   }
 }

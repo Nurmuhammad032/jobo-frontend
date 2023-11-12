@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Check } from "lucide-react";
@@ -21,6 +22,13 @@ import {
   emailValid,
   passwordMessage,
 } from "@/constants/errorMessage";
+import { apiFetch } from "@/lib/axiosConfig";
+import { useToast } from "@/components/ui/use-toast";
+import { AxiosError } from "axios";
+import { ApiError } from "@/types/error";
+import { useMutation } from "@tanstack/react-query";
+import { IResponse } from "@/types/apiResponse";
+import { useRouter } from "next/navigation";
 
 const data = [
   "Instantly schedule interviews",
@@ -34,9 +42,20 @@ const formSchema = z.object({
     message: passwordMessage,
   }),
 });
+type IRegister = z.infer<typeof formSchema>;
+
+const handleRegister = async (data: IRegister) => {
+  const res = await apiFetch.post<IResponse<any>>(
+    "/auth/register-candidate",
+    data,
+  );
+  return res.data;
+};
 
 const Page = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const { toast } = useToast();
+  const router = useRouter();
+  const form = useForm<IRegister>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -44,11 +63,32 @@ const Page = () => {
     },
   });
 
+  const { mutate: createCandidate, isPending } = useMutation({
+    mutationFn: (user: IRegister) => handleRegister(user),
+    onSuccess: ({ status, token }) => {
+      if (status) {
+        if (token) {
+          localStorage.setItem("token", token);
+        }
+        router.push("/candidate/profile");
+      }
+    },
+    onError: (error: AxiosError<ApiError>) => {
+      if (error.response?.data.message === "Email is already registered.") {
+        form.setError("email", { message: "Bu email ro'yhatdan o'tgan" });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong!",
+          description: (error as Error).message,
+        });
+      }
+    },
+  });
+
   // Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(user: IRegister) {
+    createCandidate(user);
   }
   return (
     <div className="flex flex-col items-center justify-between gap-y-8 lg:flex-row lg:items-start lg:gap-y-0">
@@ -95,7 +135,12 @@ const Page = () => {
                 </FormItem>
               )}
             />
-            <ButtonBlue type="submit">Continue with email</ButtonBlue>
+            <ButtonBlue type="submit" disabled={isPending}>
+              <span className="flex justify-center px-2">
+                {isPending && <Loader2 className="mr-2 animate-spin" />}
+                Continue with email
+              </span>
+            </ButtonBlue>
           </form>
         </Form>
       </div>

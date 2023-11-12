@@ -5,7 +5,7 @@ const Blue = ({ children, ...buttonAttributes }: IButtonProps) => {
   return (
     <button
       {...buttonAttributes}
-      className="py-4 text-white font-semibold bg-blue rounded-full w-full hover:bg-darkBlue"
+      className="w-full rounded-full bg-blue py-4 font-semibold text-white hover:bg-darkBlue disabled:pointer-events-none disabled:select-none disabled:opacity-60"
     >
       {children}
     </button>
